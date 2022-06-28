@@ -12,6 +12,14 @@ module.exports = {
       {
         test: /\.(js)$/,
         use: 'babel-loader'
+      },
+      {
+        test: /\.png$/,
+        type: 'asset/resource'
+      },
+      {
+        test: /\.svg$/,
+        use: 'svg-inline-loader'
       }
     ]
   },
