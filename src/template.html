@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <title>Food Search App</title>
+  <title>Food App</title>
 </head>
 
 <body>
@@ -21,26 +21,18 @@
         <cite>-Anonymous</cite>
       </div>
 
-      <!-- Meal search box  -->
-      <!-- <div class="meal-search-box">
-        <input type="text" placeholder="Enter an Ingredient" class="search-control" id="search-input">
-        <button class="btn search-btn">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
-      </div> -->
-
       <!-- Results from the API  -->
 
       <div class="meal-result">
         <h2>Try Some Recipes</h2>
 
         <!-- Meal-cards container  -->
-        <div id="meal">
-        </div>
+        <div id="meal"></div>
       </div>
-      <!-- start- -->
-      <div class="meal-details">
-        <button class="btn recipe-close-btn" id="recipe-close-btn">
+
+      <!-- Popup detail- -->
+      <div class="meal-details hide">
+        <!-- <button class="btn recipe-close-btn" id="recipe-close-btn">
           <i class="fa-solid fa-xmark"></i>
         </button>
 
@@ -56,7 +48,7 @@
           <div class="recipe-meal-img">
             <img src="food.jpg" alt="">
           </div>
-        </div>
+        </div> -->
       </div>
 
       <!-- End of details popup -->

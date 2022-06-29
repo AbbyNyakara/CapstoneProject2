@@ -128,8 +128,7 @@ body {
   background: var(--light-orange);
   padding: 20px;
   border-radius: 20px;
-  overflow-y: scroll;
-  display: none;
+  /* overflow-y: scroll; */
 }
 
 .recipe-close-btn {
@@ -168,9 +167,13 @@ body {
   padding: 1rem 0;
 }
 
+.recipe-instruct p {
+  font-size: 12px;
+}
+
 .recipe-meal-img img {
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
   border-radius: 20px;
 }
 
@@ -238,4 +241,18 @@ small {
   .meal-item {
     margin: 0;
   }
+}
+
+/* Javascript related styles  */
+
+.show {
+  visibility: visible;
+}
+
+.blur {
+  filter: blur(8px);
+}
+
+.hide {
+  visibility: hidden;
 }
