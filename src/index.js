@@ -46,7 +46,7 @@ const getRecipe = async (e) => {
     let mealItem = e.target.parentElement.parentElement;
     // console.log(mealItem);
     let foodID = mealItem.getAttribute('meal-id');
-    // console.log(foodID);
+    console.log(foodID);
 
     const res = await fetch(
       `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${foodID}`,
