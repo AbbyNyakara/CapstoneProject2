@@ -1,13 +1,15 @@
 import './index.css';
 
-// Define the constants 
+// Define the constants
 const mealList = document.getElementById('meal');
 const mealDetailsContent = document.querySelector('.meal-details-content');
 const recipeCloseBtn = document.getElementById('.recipe-close-btn');
 const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=egg';
 const modalDetail = document.querySelector('.meal-details');
+const involve =
+  'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/oCTjubFpNXhy5yuvP6rV';
 
-// Add event listeners 
+// Add event listeners
 
 const getFood = async () => {
   mealList.innerHTML = '';
@@ -31,22 +33,24 @@ const getFood = async () => {
             </div>
           </div>
     `;
-  })
-}
+  });
+};
 
 window.addEventListener('load', getFood);
 
 // Add event Listener to the comments popup detail
 // Because the content is created dynamically, add an event listener to the entire list of cards
 
-const getRecipe =  async (e) => {
-  if(e.target.classList.contains('recipe-btn')) {
+const getRecipe = async (e) => {
+  if (e.target.classList.contains('recipe-btn')) {
     let mealItem = e.target.parentElement.parentElement;
     // console.log(mealItem);
     let foodID = mealItem.getAttribute('meal-id');
     // console.log(foodID);
-    
-    const res = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${foodID}`);
+
+    const res = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${foodID}`,
+    );
     const dataFile = await res.json();
     const mealInfo = dataFile.meals[0];
     const html = `
@@ -70,12 +74,12 @@ const getRecipe =  async (e) => {
     modalDetail.classList.remove('hide');
     modalDetail.classList.add('show');
   }
-}
+};
 
 mealList.addEventListener('click', getRecipe);
 // bm5Pc4YXKqXjY7TxuidW
 
-//Add event listener to the close button 
+//Add event listener to the close button
 
 modalDetail.addEventListener('click', (e) => {
   if (e.target.classList.contains('fa-xmark')) {
@@ -83,4 +87,4 @@ modalDetail.addEventListener('click', (e) => {
     modal.classList.remove('show');
     modal.classList.add('hide');
   }
-})
+});
