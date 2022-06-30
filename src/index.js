@@ -64,19 +64,52 @@ const getRecipe =  async (e) => {
             <p>${mealInfo.strInstructions}</p>
           </div>
         </div>
-        <h2>Comments</h2>
+
+        <h3 class="comments-header">Comments</h3>
+        <ul id="user-comments">
+        <li></li>
+        </ul>
+        <h4 class="add-comment-header">Leave a comment</h4>
+        <form action="" class="comments-form">
+          <input type="text" placeholder="Enter your Name" class="name-input">
+          <textarea name="" id="" cols="30" rows="6" placeholder="Your Insights" class="enter-comment"></textarea>
+          <button type="submit" id="btn" class="submit-comment">Comment</button>
+        </form>
     `;
     modalDetail.innerHTML = html;
     modalDetail.classList.remove('hide');
     modalDetail.classList.add('show');
+
+    // Add the comments
+    const commentsSection = document.getElementById('user-comments');
+    const userName = document.querySelector('form .name-input');
+    const userComment = document.querySelector('form .enter-comment');
+    const form = document.querySelector('.comments-form');
+    const commentsHeader = document.querySelector('.comments-header');
+
+    // Create new entry when user submits a new comment
+    
+    form.addEventListener('submit', async(e) => {
+      e.preventDefault();
+      postComment(foodID, userName.value, userComment.value);  // via fetch api
+      form.reset();
+      const data = await retrieveComments(foodID);
+      console.log(data);
+      data.forEach((entry) => {
+        commentsSection.innerHTML += `
+          <li> ${entry.creation_date}: ${entry.username} - ${entry.comment}
+        `;
+      });
+    });
+
   }
 }
 
+// p/s: The display should not be ties to the submit event listener. 
+
 mealList.addEventListener('click', getRecipe);
-// bm5Pc4YXKqXjY7TxuidW
 
 //Add event listener to the close button 
-
 modalDetail.addEventListener('click', (e) => {
   if (e.target.classList.contains('fa-xmark')) {
     const modal = e.target.parentElement.parentElement;
@@ -84,3 +117,75 @@ modalDetail.addEventListener('click', (e) => {
     modal.classList.add('hide');
   }
 })
+
+// Involvement API to track the likes 
+// bbDC3TOidzHVfwfLZkFs
+
+// Create the add like functionality
+mealList.addEventListener('click', async (e) => {
+  // console.log(e.target);
+  if(e.target.classList.contains('fa-heart')){
+      const mainList = e.target.parentElement.parentElement.parentElement.parentElement.parentElement;
+      const id = mainList.getAttribute('meal-id');
+      postLike(id);
+      const updateLikes = mainList.lastElementChild.children[1];
+      const likesData = await renderLike();
+
+      likesData.forEach((entry) => {
+        if (entry.item_id == id) {
+          updateLikes.innerHTML = `${entry.likes} Likes`
+        }
+      })
+  }
+})
+
+const postLike = async (mealId) => {
+  const like = {
+    item_id: mealId
+  }
+
+  const response = await fetch('https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes', {
+    method: 'post',
+    body: JSON.stringify(like),
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+  const res = await response.text()
+  // console.log(res);
+}
+
+const renderLike = async() => {
+  const response = await fetch('https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes');
+  const data = await response.json();
+  return data;
+}
+
+
+//*******************************COMMENTS INVOLVEMENT API*****************************/
+// Post the comments 
+const postComment = async (mealCode, user, insights) => {
+  const comment = {
+      "item_id": mealCode,
+      "username": user,
+      "comment": insights,
+  }
+  const response = await fetch('https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/comments', {
+    method: 'post',
+    body: JSON.stringify(comment),
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+  const res = await response.text()
+  console.log(res);
+}
+
+// Retrieve the comment from the API
+const retrieveComments = async(itemId) => {
+  const url = `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/comments?item_id=${itemId}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+  // console.log(data)
+}
