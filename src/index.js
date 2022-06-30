@@ -38,6 +38,13 @@ const getFood = async () => {
 
 getFood();
 
+const mealCount = async () => {
+  const response = await getFood();
+  const meals = document.getElementsByClassName('meal-item');
+  console.log(meals.length);
+};
+window.addEventListener('load', mealCount);
+
 // Add event Listener to the comments popup detail
 // Because the content is created dynamically, add an event listener to the entire list of cards
 
@@ -89,12 +96,12 @@ const getRecipe = async (e) => {
     const listComment = () => {
       const commentsSection = document.getElementById('comments-section');
       let scoreArray = [];
-      const COMMENTLLIST_URL =
-        'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/y4bL7yewPCdwLzTxEhAz/comments?item_id=';
+      // const COMMENTLLIST_URL =
+      //   'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/y4bL7yewPCdwLzTxEhAz/comments?item_id=';
       const addToList = async () => {
-        const result = await fetch(`${COMMENTLLIST_URL}52952`).then((res) =>
-          res.json(),
-        );
+        const result = await fetch(
+          `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/y4bL7yewPCdwLzTxEhAz/comments?item_id=${foodID}`,
+        ).then((res) => res.json());
         return result;
       };
       addToList().then((res) => {
