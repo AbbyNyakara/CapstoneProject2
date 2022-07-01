@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars import/prefer-default-export no-use-before-define */
+/* eslint-disable no-unused-vars */
 
 import './index.css';
 
@@ -191,27 +191,26 @@ const renderLike = async() => {
 // Post the comments 
 const postComment = async (mealCode, user, insights) => {
   const comment = {
-      "item_id": mealCode,
-      "username": user,
-      "comment": insights,
-  }
+      item_id: mealCode,
+      username: user,
+      comment: insights,
+  };
   const response = await fetch('https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/comments', {
     method: 'post',
     body: JSON.stringify(comment),
     headers: {
       'Content-Type': 'application/json',
-    }
-  })
-  const res = await response.text()
-  console.log(res);
-}
+    },
+  });
+  const res = await response.text();
+  // console.log(res);
+};
 
 // Retrieve the comment from the API
-const retrieveComments = async(itemId) => {
+const retrieveComments = async (itemId) => {
   const url = `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/comments?item_id=${itemId}`;
   const response = await fetch(url);
   const data = await response.json();
   return data;
   // console.log(data)
 };
-
