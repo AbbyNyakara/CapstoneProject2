@@ -9,7 +9,7 @@ const modalDetail = document.querySelector('.meal-details');
 
 // Add event listeners 
 
-const getFood = async () => {
+export const getFood = async () => {
   mealList.innerHTML = '';
   const response = await fetch(url);
   const dataContent = await response.json();
@@ -81,27 +81,39 @@ const getRecipe =  async (e) => {
     modalDetail.classList.add('show');
 
     // Add the comments
-    const commentsSection = document.getElementById('user-comments');
-    const userName = document.querySelector('form .name-input');
-    const userComment = document.querySelector('form .enter-comment');
-    const form = document.querySelector('.comments-form');
-    const commentsHeader = document.querySelector('.comments-header');
-
-    // Create new entry when user submits a new comment
-    
-    form.addEventListener('submit', async(e) => {
-      e.preventDefault();
-      postComment(foodID, userName.value, userComment.value);  // via fetch api
-      form.reset();
-      const data = await retrieveComments(foodID);
-      console.log(data);
-      data.forEach((entry) => {
-        commentsSection.innerHTML += `
-          <li> ${entry.creation_date}: ${entry.username} - ${entry.comment}
-        `;
+    // const commentsSection = document.getElementById('user-comments');
+    // let commentsArray = [];
+    // const data = await retrieveComments(foodID);
+    // if (data){
+    // data.forEach((entry) => {
+    //   // commentsSection.innerHTML += `
+    //   //   <li> ${entry.creation_date}: ${entry.username} - ${entry.comment}
+    //   // `;
+    // });
+    // }
+    // End of edit 
+    const listComment = () => {
+      const commentsSection = document.getElementById('user-comments');
+      let scoreArray = [];
+      const addToList = async () => {
+        const result = await fetch(
+          `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/comments?item_id=${foodID}`,
+        ).then((res) => res.json());
+        return result;
+      };
+      addToList().then((res) => {
+        commentsSection.innerHTML = '';
+        if (res) {
+          scoreArray = res;
+          for (let i = 0; i < scoreArray.length; i += 1) {
+            commentsSection.innerHTML += `
+                  <li> ${scoreArray[i].creation_date}: ${scoreArray[i].username}-${scoreArray[i].comment}</li>
+                    `;
+          }
+        }
       });
-    });
-
+    };
+    listComment();
   }
 }
 
@@ -113,9 +125,20 @@ mealList.addEventListener('click', getRecipe);
 modalDetail.addEventListener('click', (e) => {
   if (e.target.classList.contains('fa-xmark')) {
     const modal = e.target.parentElement.parentElement;
+    // console.log(modal)
     modal.classList.remove('show');
     modal.classList.add('hide');
+  } else if (e.target.classList.contains('submit-comment')){
+    //Do sth 
+    let mealItem = e.target.parentElement.parentElement.parentElement;
+    let foodID = mealItem.getAttribute('meal-id');
+    const userName = document.querySelector('form .name-input');
+    const userComment = document.querySelector('form .enter-comment');
+    const form = document.querySelector('form');
+    postComment(foodID, userName.value, userComment.value);
+    form.reset();
   }
+  
 })
 
 // Involvement API to track the likes 
@@ -188,4 +211,5 @@ const retrieveComments = async(itemId) => {
   const data = await response.json();
   return data;
   // console.log(data)
-}
+};
+
