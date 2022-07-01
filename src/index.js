@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars import/prefer-default-export no-use-before-define */
 
 import './index.css';
 
@@ -9,7 +9,7 @@ const recipeCloseBtn = document.getElementById('.recipe-close-btn');
 const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=egg';
 const modalDetail = document.querySelector('.meal-details');
 
-// Add event listeners 
+// Add event listeners
 
 export const getFood = async () => {
   mealList.innerHTML = '';
@@ -33,21 +33,21 @@ export const getFood = async () => {
             </div>
           </div>
     `;
-  })
-}
+  });
+};
 
 window.addEventListener('load', getFood);
 
 // Add event Listener to the comments popup detail
 // Because the content is created dynamically, add an event listener to the entire list of cards
 
-const getRecipe =  async (e) => {
-  if(e.target.classList.contains('recipe-btn')) {
-    let mealItem = e.target.parentElement.parentElement;
+const getRecipe = async (e) => {
+  if (e.target.classList.contains('recipe-btn')) {
+    const mealItem = e.target.parentElement.parentElement;
     // console.log(mealItem);
-    let foodID = mealItem.getAttribute('meal-id');
+    const foodID = mealItem.getAttribute('meal-id');
     // console.log(foodID);
-    
+
     const res = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${foodID}`);
     const dataFile = await res.json();
     const mealInfo = dataFile.meals[0];
@@ -93,7 +93,7 @@ const getRecipe =  async (e) => {
     //   // `;
     // });
     // }
-    // End of edit 
+    // End of edit
     const listComment = () => {
       const commentsSection = document.getElementById('user-comments');
       let scoreArray = [];
@@ -117,23 +117,23 @@ const getRecipe =  async (e) => {
     };
     listComment();
   }
-}
+};
 
-// p/s: The display should not be ties to the submit event listener. 
+// p/s: The display should not be ties to the submit event listener.
 
 mealList.addEventListener('click', getRecipe);
 
-//Add event listener to the close button 
+// Add event listener to the close button
 modalDetail.addEventListener('click', (e) => {
   if (e.target.classList.contains('fa-xmark')) {
     const modal = e.target.parentElement.parentElement;
     // console.log(modal)
     modal.classList.remove('show');
     modal.classList.add('hide');
-  } else if (e.target.classList.contains('submit-comment')){
-    //Do sth 
-    let mealItem = e.target.parentElement.parentElement.parentElement;
-    let foodID = mealItem.getAttribute('meal-id');
+  } else if (e.target.classList.contains('submit-comment')) {
+    // Do sth 
+    const mealItem = e.target.parentElement.parentElement.parentElement;
+    const foodID = mealItem.getAttribute('meal-id');
     const userName = document.querySelector('form .name-input');
     const userComment = document.querySelector('form .enter-comment');
     const form = document.querySelector('form');
