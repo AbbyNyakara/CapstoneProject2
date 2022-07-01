@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
+
 import './index.css';
 
-// Define the constants 
+// Define the constants
 const mealList = document.getElementById('meal');
 const mealDetailsContent = document.querySelector('.meal-details-content');
 const recipeCloseBtn = document.getElementById('.recipe-close-btn');

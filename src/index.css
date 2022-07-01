@@ -18,13 +18,13 @@
   border-radius: 15px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #4e1d03;
-}
-
 :root {
   --light-orange: #d65108;
   --dark-orange: #b54507;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4e1d03;
 }
 
 body {
