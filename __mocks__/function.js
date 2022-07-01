@@ -1,9 +1,5 @@
 // Meals counter Function
-export const mealsCounter = (array) => {
-  return(array.length);
-};
+export const mealsCounter = (array) => array.length;
 
 //comments Counter 
-export const commentsCounter = (commentsArray) => {
-  return(commentsArray.length);
-};
+export const commentsCounter = (commentsArray) => commentsArray.length;
