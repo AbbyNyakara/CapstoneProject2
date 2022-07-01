@@ -17,8 +17,9 @@ const getFood = async () => {
   const response = await fetch(url);
   const dataContent = await response.json();
   const foodData = dataContent.meals;
+  console.log(dataContent);
 
-  foodData.forEach((meal) => {
+  foodData.forEach( async(meal) => {
     mealList.innerHTML += `
           <div class="meal-item" meal-id = ${meal.idMeal}>
             <div class="meal">
@@ -28,13 +29,24 @@ const getFood = async () => {
             </div>
   
             <div class="meal-name">
-              <h3>${meal.strMeal} <span><button class="like-button"><i class="fa-solid fa-heart"></i></button></span></h3>
+              <h3>${meal.strMeal} <span><button class="like-button" id="like-${meal.idMeal}"><i class="fa-solid fa-heart"></i></button></span></h3>
               <small> 0 Likes</small>
               <a href="#" class="recipe-btn">Comment on Recipe</a>
             </div>
           </div>
     `;
+    const response = await fetch('https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes');
+    const data = await response.json();
+    console.log(data[0]);
+    data.forEach((entry) => {
+      // if (entry.item_id === meal.idMeal) {
+      //   const updateLikes = mealList.lastElementChild.children[1];
+      //   updateLikes.innerHTML = `${entry.likes} Likes`;
+      // }
+      console.log(entry);
+    })
   });
+ 
 };
 
 window.addEventListener('load', getFood);
@@ -95,27 +107,6 @@ const getRecipe = async (e) => {
     // });
     // }
     // End of edit
-    const listComment = () => {
-      const commentsSection = document.getElementById('user-comments');
-      let scoreArray = [];
-      const addToList = async () => {
-        const result = await fetch(
-          `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/comments?item_id=${foodID}`,
-        ).then((res) => res.json());
-        return result;
-      };
-      addToList().then((res) => {
-        commentsSection.innerHTML = '';
-        if (res) {
-          scoreArray = res;
-          for (let i = 0; i < scoreArray.length; i += 1) {
-            commentsSection.innerHTML += `
-                  <li> ${scoreArray[i].creation_date}: ${scoreArray[i].username}-${scoreArray[i].comment}</li>
-                    `;
-          }
-        }
-      });
-    };
     listComment();
   }
 };
@@ -164,6 +155,36 @@ mealList.addEventListener('click', async (e) => {
     });
   }
 });
+
+// Display likes on load 
+
+const showOnLoad = async(id) => {
+
+}
+
+
+
+// Likes to render once the window loads
+mealList.addEventListener('load', async (e) => {
+  // console.log(e.target);
+  if (e.target.classList.contains('fa-heart')) {
+    const mainList = e.target.parentElement.parentElement.parentElement
+      .parentElement.parentElement;
+    const id = mainList.getAttribute('meal-id');
+    postLike(id);
+    const updateLikes = mainList.lastElementChild.children[1];
+    const likesData = await renderLike();
+
+    likesData.forEach((entry) => {
+      if (entry.item_id === id) {
+        updateLikes.innerHTML = `${entry.likes} Likes`;
+      }
+    });
+  }
+});
+
+
+// Involvement API 
 
 const postLike = async (mealId) => {
   const like = {
