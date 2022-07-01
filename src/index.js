@@ -1,36 +1,31 @@
 import './index.css';
 
 // Define the constants
-const mealList = document.getElementById('meal');
+let mealList = document.getElementById('meal');
 const mealDetailsContent = document.querySelector('.meal-details-content');
 const recipeCloseBtn = document.getElementById('.recipe-close-btn');
 const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=egg';
 const modalDetail = document.querySelector('.meal-details');
-const involve =
-  'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs';
 
 // Add event listeners
+let foodData = [],
+  likesData = [],
+  data2 = [];
+// let mealList.innerHTML = "";
+let orderedLikesData = [];
 
 const getFood = async () => {
   mealList.innerHTML = '';
   const response = await fetch(url);
   const dataContent = await response.json();
-  const foodData = dataContent.meals;
-  const res = await fetch(
-    'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes',
-  );
-  const data = await res.json();
-  console.log(data);
+  foodData = dataContent.meals;
+  // const foodData = dataContent.meals;
+  console.log('FoodData', foodData);
 
   foodData.forEach((meal) => {
-
-    const res = await fetch(
-    'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes',
-  );
-  const data = await res.json();
-  console.log(data);
-  
-
+    //indexNumber = data2.indexOf(meal.idMeal);
+    // console.log('index of number', data2)
+    console.log('Meal ID', meal.idMeal);
     mealList.innerHTML += `
           <div class="meal-item" meal-id = ${meal.idMeal}>
             <div class="meal">
@@ -41,90 +36,23 @@ const getFood = async () => {
   
             <div class="meal-name">
               <h3>${meal.strMeal} <span><button class="like-button"><i class="fa-solid fa-heart"></i></button></span></h3>
-              <small class=${meal.idMeal}  id="likes" > 0 Likes</small>
+              <small class=${meal.idMeal}> 0 Likes</small>
               <a href="#" class="recipe-btn">Comment on Recipe</a>
             </div>
           </div>
     `;
   });
-
-  /*   const listLikes = () => {
-    const Likes = document.getElementById('likes');
-    let mealID = Likes.getAttribute('class');
-    let scoreArray = [];
-
-      const addToList = async () => {
-      const result = await fetch(
-        `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes`,
-      ).then((res) => res.json());
-      return result;
-    };
-    addToList().then((res) => {
-      Likes.innerHTML = '';
-      scoreArray = res;
-      console.log(scoreArray);
-
-      scoreArray.forEach((score) => {
-        if (score.item_id === mealID) {
-          console.log(score.item_id);
-        }
-      });
-    });
-  };
-  listLikes(); */
-
-  const renderLike = async () => {
-    const reqlikeURL =
-      'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes';
-    const LikeURL = new Request(reqlikeURL);
-    let response = await fetch(LikeURL);
-    let data = await response.json();
-    return data;
-  };
-  const likesData = await renderLike();
-  let Likes = document.querySelectorAll('meal-id');
-  console.log(Likes);
-  /*
-  likesData.forEach((entry) => {
-    if (entry.item_id === mealID) {
-      Likes.innerHTML = `${entry.likes} Likes`;
-    }
-  });*/
 };
 
 getFood();
-/*
-const listLikes = async () => {
-  const wait = await getFood();
-  let scoreArray = [];
-  const addToList = async () => {
-    const result = await fetch(
-      `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes`,
-    ).then((res) => res.json());
-    return result;
-  };
-
-  addToList().then((res) => {
-    scoreArray = res;
-    console.log(scoreArray);
-
-    const Likes = document.getElementById('likes');
-    let mealID = Likes.forEach.getAttribute('class');
-    console.log(Likes);
-    Likes.innerHTML = '';
-    scoreArray.forEach((score) => {
-      if (score.item_id === mealID) {
-        Likes.innerHTML = `${entry.likes} Likes`;
-      }
-    });
-  });
-};
-listLikes(); */
 
 const mealCount = async () => {
   const response = await getFood();
+  const Count = document.getElementById('meal-count');
   const meals = document.getElementsByClassName('meal-item');
-  console.log(meals.length);
+  const data = meals.length;
+  console.log(data);
+  Count.innerHTML = ` (${data}) Meals `;
 };
 window.addEventListener('load', mealCount);
 
@@ -136,7 +64,7 @@ const getRecipe = async (e) => {
     let mealItem = e.target.parentElement.parentElement;
     // console.log(mealItem);
     let foodID = mealItem.getAttribute('meal-id');
-    console.log('no');
+    // console.log(foodID);
 
     const res = await fetch(
       `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${foodID}`,
@@ -158,28 +86,33 @@ const getRecipe = async (e) => {
             <p>${mealInfo.strInstructions}</p>
           </div>
         </div>
-        <div class="comment-display">
-        <h2>Comments</h2>
-        <ul id="comments-section">
+
+        <h3 class="comments-header">Comments</h3>
+        <ul id="user-comments">
+        <li></li>
         </ul>
-        </div>
-        <div class="add-comment" meal-id=${foodID} >
-                <h2>Add Comments</h2>
-                <ul>
-                    <li><input type="text" id="name" placeholder="Your Name" required></li>
-                    <li><textarea cols="30" id="insight" rows="10" placeholder="Your insights" required></textarea></li>
-                    <li><button type="button" class="SUBMIT" id="submit" >Comment</button></li>
-                </ul>
-                </div>  
+        <h4 class="add-comment-header">Leave a comment</h4>
+        <form action="" class="comments-form">
+          <input type="text" placeholder="Enter your Name" class="name-input">
+          <textarea name="" id="" cols="30" rows="6" placeholder="Your Insights" class="enter-comment"></textarea>
+          <button type="submit" id="btn" class="submit-comment">Comment</button>
+        </form>
     `;
     modalDetail.innerHTML = html;
     modalDetail.classList.remove('hide');
     modalDetail.classList.add('show');
 
-    const listComment = () => {
-      const commentsSection = document.getElementById('comments-section');
-      let scoreArray = [];
+    // Add the comments
+    const commentsSection = document.getElementById('user-comments');
+    const userName = document.querySelector('form .name-input');
+    const userComment = document.querySelector('form .enter-comment');
+    const form = document.querySelector('.comments-form');
+    const commentsHeader = document.querySelector('.comments-header');
 
+    // Create new entry when user submits a new comment
+
+    const listComment = async () => {
+      let scoreArray = [];
       const addToList = async () => {
         const result = await fetch(
           `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/comments?item_id=${foodID}`,
@@ -192,86 +125,167 @@ const getRecipe = async (e) => {
           scoreArray = res;
           for (let i = 0; i < scoreArray.length; i += 1) {
             commentsSection.innerHTML += `
-                  <li class="comment-items"> <p>${scoreArray[i].creation_date}</p><p>${scoreArray[i].username}:</p><p>${scoreArray[i].comment}</p></li>
-          
+                  <li> ${scoreArray[i].creation_date}: ${scoreArray[i].username}-${scoreArray[i].comment}</li>
                     `;
           }
         }
       });
+      const wait = await addToList();
+      let data = scoreArray.length;
+      commentsHeader.innerHTML = ` (${data}) Comments `;
     };
     listComment();
-  } else if (e.target.classList.contains('like-button')) {
-    let mealItem =
-      e.target.parentElement.parentElement.parentElement.parentElement;
-    let foodID = mealItem.getAttribute('meal-id');
-    console.log(foodID);
-    const url =
-      'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes';
-    const response = fetch(url, {
-      method: 'POST',
-      body: JSON.stringify({ item_id: foodID }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-        Accept: 'application/json',
-      },
-    })
-      .then((data) => data.text())
-      .then((data) => console.log(data));
 
-    const renderLike = async () => {
-      const reqlikeURL =
-        'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes';
-      const wait = await getFood();
-      const LikeURL = new Request(reqlikeURL);
-      let response = await fetch(LikeURL);
-      let data = await response.json();
-      return data;
-    };
-    const likesData = await renderLike();
-    const Likes = document.getElementById('likes');
-    let mealID = Likes.getAttribute('class');
-    Likes.innerHTML = ``;
-
-    likesData.forEach((entry) => {
-      if (entry.item_id === mealID) {
-        Likes.innerHTML = `${entry.likes} Likes`;
-      }
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      postComment(foodID, userName.value, userComment.value); // via fetch api
+      form.reset();
     });
   }
 };
 
+// p/s: The display should not be ties to the submit event listener.
+
 mealList.addEventListener('click', getRecipe);
 
 //Add event listener to the close button
-
 modalDetail.addEventListener('click', (e) => {
   if (e.target.classList.contains('fa-xmark')) {
     const modal = e.target.parentElement.parentElement;
     modal.classList.remove('show');
     modal.classList.add('hide');
-  } else if (e.target.classList.contains('SUBMIT')) {
-    let mealItem = e.target.parentElement.parentElement.parentElement;
-    let foodID = mealItem.getAttribute('meal-id');
-    const username = document.querySelector('#name');
-    const comment = document.querySelector('#insight');
-    const result = fetch(
-      `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/comments`,
-      {
-        method: 'POST',
-        body: JSON.stringify({
-          item_id: foodID,
-          username: `${username.value}`,
-          comment: `${comment.value}`,
-        }),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-          Accept: 'application/json',
-        },
-      },
-    )
-      .then((data) => data.text())
-      .then((data) => console.log(data));
-    username.value = '';
-    comment.value = '';
   }
 });
+
+// Involvement API to track the likes
+// bbDC3TOidzHVfwfLZkFs
+
+// Create the add like functionality
+mealList.addEventListener('click', async (e) => {
+  // console.log(e.target);
+  if (e.target.classList.contains('fa-heart')) {
+    const mainList =
+      e.target.parentElement.parentElement.parentElement.parentElement
+        .parentElement;
+    const id = mainList.getAttribute('meal-id');
+    postLike(id);
+    const updateLikes = mainList.lastElementChild.children[1];
+    likesData = await renderLike();
+
+    console.log('likesData', likesData);
+
+    likesData.forEach((entry) => {
+      if (entry.item_id == id) {
+        updateLikes.innerHTML = `${entry.likes} Likes`;
+      }
+    });
+  }
+});
+
+const postLike = async (mealId) => {
+  const like = {
+    item_id: mealId,
+  };
+
+  const response = await fetch(
+    'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes',
+    {
+      method: 'post',
+      body: JSON.stringify(like),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  const res = await response.text();
+  // console.log(res);
+};
+
+const renderLike = async () => {
+  const response = await fetch(
+    'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes',
+  );
+  const data = await response.json();
+  console.log('Data renderLike', data);
+  return data;
+};
+
+//*******************************COMMENTS INVOLVEMENT API*****************************/
+// Post the comments
+const postComment = async (mealCode, user, insights) => {
+  const comment = {
+    item_id: mealCode,
+    username: user,
+    comment: insights,
+  };
+  const response = await fetch(
+    'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/comments',
+    {
+      method: 'post',
+      body: JSON.stringify(comment),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  const res = await response.text();
+  console.log(res);
+};
+
+// Retrieve the comment from the API
+const retrieveComments = async (itemId) => {
+  const url = `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/comments?item_id=${itemId}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+  // console.log(data)
+};
+
+// ////////////////////////////////
+
+const renderLike2 = async () => {
+  const response = await fetch(
+    'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes',
+  );
+  const data2 = await response.json();
+
+  const response2 = await fetch(url);
+  const dataContent = await response2.json();
+  foodData = dataContent.meals;
+
+  let data3 = Promise.allSettled([foodData, data2]).then((values) => {
+    values[0].value.forEach((elem0) => {
+      values[1].value.forEach((elem1) => {
+        if (elem0.idMeal === elem1.item_id) {
+          orderedLikesData.push(elem1);
+        }
+      });
+    });
+
+    mealList.innerHTML = '';
+
+    foodData.forEach((meal, index) => {
+      mealList.innerHTML += `
+          <div class="meal-item" meal-id = ${meal.idMeal}>
+            <div class="meal">
+              <div class="meal-img">
+                <img src="${meal.strMealThumb}" alt="Food-image">
+              </div>
+            </div>
+
+            <div class="meal-name">
+              <h3>${
+                meal.strMeal
+              } <span><button class="like-button"><i class="fa-solid fa-heart"></i></button></span></h3>
+              <small> ${orderedLikesData[index].likes || 0} Likes</small>
+              <a href="#" class="recipe-btn">Comment on Recipe</a>
+            </div>
+          </div>
+    `;
+    });
+  });
+
+  return data3;
+};
+
+renderLike2();
