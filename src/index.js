@@ -160,32 +160,31 @@ mealList.addEventListener('click', async (e) => {
         if (entry.item_id == id) {
           updateLikes.innerHTML = `${entry.likes} Likes`
         }
-      })
-  }
-})
+      });
+  };
+});
 
 const postLike = async (mealId) => {
   const like = {
-    item_id: mealId
-  }
+    item_id: mealId,
+  };
 
   const response = await fetch('https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes', {
     method: 'post',
     body: JSON.stringify(like),
     headers: {
       'Content-Type': 'application/json',
-    }
-  })
-  const res = await response.text()
+    },
+  });
+  const res = await response.text();
   // console.log(res);
-}
+};
 
 const renderLike = async() => {
   const response = await fetch('https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes');
   const data = await response.json();
   return data;
-}
-
+};
 
 //*******************************COMMENTS INVOLVEMENT API*****************************/
 // Post the comments 
