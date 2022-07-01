@@ -23,6 +23,14 @@ const getFood = async () => {
   console.log(data);
 
   foodData.forEach((meal) => {
+
+    const res = await fetch(
+    'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes',
+  );
+  const data = await res.json();
+  console.log(data);
+  
+
     mealList.innerHTML += `
           <div class="meal-item" meal-id = ${meal.idMeal}>
             <div class="meal">
