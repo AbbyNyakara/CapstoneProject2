@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-use-before-define */
 
 import './index.css';
 
@@ -149,8 +150,8 @@ modalDetail.addEventListener('click', (e) => {
 mealList.addEventListener('click', async (e) => {
   // console.log(e.target);
   if (e.target.classList.contains('fa-heart')) {
-    const mainList = e.target.parentElement.parentElement.parentElement.
-    parentElement.parentElement;
+    const mainList = e.target.parentElement.parentElement.parentElement
+      .parentElement.parentElement;
     const id = mainList.getAttribute('meal-id');
     postLike(id);
     const updateLikes = mainList.lastElementChild.children[1];
@@ -158,7 +159,7 @@ mealList.addEventListener('click', async (e) => {
 
     likesData.forEach((entry) => {
       if (entry.item_id === id) {
-        updateLikes.innerHTML = `${entry.likes} Likes`
+        updateLikes.innerHTML = `${entry.likes} Likes`;
       }
     });
   }

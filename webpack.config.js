@@ -20,8 +20,8 @@ module.exports = {
       {
         test: /\.svg$/,
         use: 'svg-inline-loader',
-      }
-    ]
+      },
+    ],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -30,5 +30,5 @@ module.exports = {
   plugins: [new HtmlWebpackPlugin({
     template: './src/template.html',
   })],
-  mode: 'development'
+  mode: 'development',
 };
