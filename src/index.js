@@ -11,7 +11,7 @@ const modalDetail = document.querySelector('.meal-details');
 
 // Add event listeners
 
-export const getFood = async () => {
+const getFood = async () => {
   mealList.innerHTML = '';
   const response = await fetch(url);
   const dataContent = await response.json();
@@ -131,7 +131,7 @@ modalDetail.addEventListener('click', (e) => {
     modal.classList.remove('show');
     modal.classList.add('hide');
   } else if (e.target.classList.contains('submit-comment')) {
-    // Do sth 
+    // Do sth
     const mealItem = e.target.parentElement.parentElement.parentElement;
     const foodID = mealItem.getAttribute('meal-id');
     const userName = document.querySelector('form .name-input');
@@ -140,28 +140,28 @@ modalDetail.addEventListener('click', (e) => {
     postComment(foodID, userName.value, userComment.value);
     form.reset();
   }
-  
-})
+});
 
-// Involvement API to track the likes 
+// Involvement API to track the likes
 // bbDC3TOidzHVfwfLZkFs
 
 // Create the add like functionality
 mealList.addEventListener('click', async (e) => {
   // console.log(e.target);
-  if(e.target.classList.contains('fa-heart')){
-      const mainList = e.target.parentElement.parentElement.parentElement.parentElement.parentElement;
-      const id = mainList.getAttribute('meal-id');
-      postLike(id);
-      const updateLikes = mainList.lastElementChild.children[1];
-      const likesData = await renderLike();
+  if (e.target.classList.contains('fa-heart')) {
+    const mainList = e.target.parentElement.parentElement.parentElement.
+    parentElement.parentElement;
+    const id = mainList.getAttribute('meal-id');
+    postLike(id);
+    const updateLikes = mainList.lastElementChild.children[1];
+    const likesData = await renderLike();
 
-      likesData.forEach((entry) => {
-        if (entry.item_id == id) {
-          updateLikes.innerHTML = `${entry.likes} Likes`
-        }
-      });
-  };
+    likesData.forEach((entry) => {
+      if (entry.item_id === id) {
+        updateLikes.innerHTML = `${entry.likes} Likes`
+      }
+    });
+  }
 });
 
 const postLike = async (mealId) => {
@@ -180,19 +180,19 @@ const postLike = async (mealId) => {
   // console.log(res);
 };
 
-const renderLike = async() => {
+const renderLike = async () => {
   const response = await fetch('https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes');
   const data = await response.json();
   return data;
 };
 
-//*******************************COMMENTS INVOLVEMENT API*****************************/
-// Post the comments 
+// *******************************COMMENTS INVOLVEMENT API*****************************/
+// Post the comments
 const postComment = async (mealCode, user, insights) => {
   const comment = {
-      item_id: mealCode,
-      username: user,
-      comment: insights,
+    item_id: mealCode,
+    username: user,
+    comment: insights,
   };
   const response = await fetch('https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/comments', {
     method: 'post',
