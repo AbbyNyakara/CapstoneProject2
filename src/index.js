@@ -7,7 +7,7 @@ const recipeCloseBtn = document.getElementById('.recipe-close-btn');
 const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=egg';
 const modalDetail = document.querySelector('.meal-details');
 const involve =
-  'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/y4bL7yewPCdwLzTxEhAz';
+  'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs';
 
 // Add event listeners
 
@@ -16,6 +16,11 @@ const getFood = async () => {
   const response = await fetch(url);
   const dataContent = await response.json();
   const foodData = dataContent.meals;
+  const res = await fetch(
+    'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes',
+  );
+  const data = await res.json();
+  console.log(data);
 
   foodData.forEach((meal) => {
     mealList.innerHTML += `
@@ -28,15 +33,85 @@ const getFood = async () => {
   
             <div class="meal-name">
               <h3>${meal.strMeal} <span><button class="like-button"><i class="fa-solid fa-heart"></i></button></span></h3>
-              <small> 0 Likes</small>
+              <small class=${meal.idMeal}  id="likes" > 0 Likes</small>
               <a href="#" class="recipe-btn">Comment on Recipe</a>
             </div>
           </div>
     `;
   });
+
+  /*   const listLikes = () => {
+    const Likes = document.getElementById('likes');
+    let mealID = Likes.getAttribute('class');
+    let scoreArray = [];
+
+      const addToList = async () => {
+      const result = await fetch(
+        `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes`,
+      ).then((res) => res.json());
+      return result;
+    };
+    addToList().then((res) => {
+      Likes.innerHTML = '';
+      scoreArray = res;
+      console.log(scoreArray);
+
+      scoreArray.forEach((score) => {
+        if (score.item_id === mealID) {
+          console.log(score.item_id);
+        }
+      });
+    });
+  };
+  listLikes(); */
+
+  const renderLike = async () => {
+    const reqlikeURL =
+      'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes';
+    const LikeURL = new Request(reqlikeURL);
+    let response = await fetch(LikeURL);
+    let data = await response.json();
+    return data;
+  };
+  const likesData = await renderLike();
+  let Likes = document.querySelectorAll('meal-id');
+  console.log(Likes);
+  /*
+  likesData.forEach((entry) => {
+    if (entry.item_id === mealID) {
+      Likes.innerHTML = `${entry.likes} Likes`;
+    }
+  });*/
 };
 
 getFood();
+/*
+const listLikes = async () => {
+  const wait = await getFood();
+  let scoreArray = [];
+  const addToList = async () => {
+    const result = await fetch(
+      `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes`,
+    ).then((res) => res.json());
+    return result;
+  };
+
+  addToList().then((res) => {
+    scoreArray = res;
+    console.log(scoreArray);
+
+    const Likes = document.getElementById('likes');
+    let mealID = Likes.forEach.getAttribute('class');
+    console.log(Likes);
+    Likes.innerHTML = '';
+    scoreArray.forEach((score) => {
+      if (score.item_id === mealID) {
+        Likes.innerHTML = `${entry.likes} Likes`;
+      }
+    });
+  });
+};
+listLikes(); */
 
 const mealCount = async () => {
   const response = await getFood();
@@ -96,11 +171,10 @@ const getRecipe = async (e) => {
     const listComment = () => {
       const commentsSection = document.getElementById('comments-section');
       let scoreArray = [];
-      // const COMMENTLLIST_URL =
-      //   'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/y4bL7yewPCdwLzTxEhAz/comments?item_id=';
+
       const addToList = async () => {
         const result = await fetch(
-          `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/y4bL7yewPCdwLzTxEhAz/comments?item_id=${foodID}`,
+          `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/comments?item_id=${foodID}`,
         ).then((res) => res.json());
         return result;
       };
@@ -124,7 +198,7 @@ const getRecipe = async (e) => {
     let foodID = mealItem.getAttribute('meal-id');
     console.log(foodID);
     const url =
-      'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/y4bL7yewPCdwLzTxEhAz/likes';
+      'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes';
     const response = fetch(url, {
       method: 'POST',
       body: JSON.stringify({ item_id: foodID }),
@@ -135,6 +209,26 @@ const getRecipe = async (e) => {
     })
       .then((data) => data.text())
       .then((data) => console.log(data));
+
+    const renderLike = async () => {
+      const reqlikeURL =
+        'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes';
+      const wait = await getFood();
+      const LikeURL = new Request(reqlikeURL);
+      let response = await fetch(LikeURL);
+      let data = await response.json();
+      return data;
+    };
+    const likesData = await renderLike();
+    const Likes = document.getElementById('likes');
+    let mealID = Likes.getAttribute('class');
+    Likes.innerHTML = ``;
+
+    likesData.forEach((entry) => {
+      if (entry.item_id === mealID) {
+        Likes.innerHTML = `${entry.likes} Likes`;
+      }
+    });
   }
 };
 
@@ -153,7 +247,7 @@ modalDetail.addEventListener('click', (e) => {
     const username = document.querySelector('#name');
     const comment = document.querySelector('#insight');
     const result = fetch(
-      `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/y4bL7yewPCdwLzTxEhAz/comments`,
+      `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/comments`,
       {
         method: 'POST',
         body: JSON.stringify({

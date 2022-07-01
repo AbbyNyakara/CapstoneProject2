@@ -196,6 +196,28 @@ body {
   border-radius: 20px;
 }
 
+.comments-section {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+#name,
+#insight {
+  padding: 5px;
+  margin-bottom: 8px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.comment-items {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
 .like-button {
   background: var(--dark-orange);
   color: #fff;
