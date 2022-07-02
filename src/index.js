@@ -160,7 +160,7 @@ modalDetail.addEventListener('click', (e) => {
 mealList.addEventListener('click', async (e) => {
   if (e.target.classList.contains('fa-heart')) {
     const mainList = e.target.parentElement.parentElement.parentElement.parentElement
-        .parentElement;
+      .parentElement;
     const id = mainList.getAttribute('meal-id');
     postLike(id);
     const updateLikes = mainList.lastElementChild.children[1];
@@ -260,9 +260,7 @@ const renderLike2 = async () => {
             </div>
 
             <div class="meal-name">
-              <h3>${
-                meal.strMeal
-              } <span><button class="like-button"><i class="fa-solid fa-heart"></i></button></span></h3>
+              <h3>${meal.strMeal} <span><button class="like-button"><i class="fa-solid fa-heart"></i></button></span></h3>
               <small> ${orderedLikesData[index].likes || 0} Likes</small>
               <a href="#" class="recipe-btn">Comment on Recipe</a>
             </div>
