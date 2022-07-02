@@ -12,6 +12,7 @@ const modalDetail = document.querySelector('.meal-details');
 
 // Add event listeners
 
+// To fetch data from food API and the involvement API
 const getFood = async () => {
   mealList.innerHTML = '';
   const response = await fetch(url);
