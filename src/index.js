@@ -1,17 +1,16 @@
+/* eslint disable no-unused-vars*/
+
 import './index.css';
 
 // Define the constants
-let mealList = document.getElementById('meal');
+const mealList = document.getElementById('meal');
 const mealDetailsContent = document.querySelector('.meal-details-content');
 const recipeCloseBtn = document.getElementById('.recipe-close-btn');
 const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=egg';
 const modalDetail = document.querySelector('.meal-details');
 
 // Add event listeners
-let foodData = [],
-  likesData = [],
-  data2 = [];
-// let mealList.innerHTML = "";
+let foodData = [], likesData = [], data2 = [];
 let orderedLikesData = [];
 
 const getFood = async () => {
