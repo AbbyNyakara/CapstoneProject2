@@ -11,7 +11,7 @@ const modalDetail = document.querySelector('.meal-details');
 
 // Add event listeners
 let foodData = [];
-let likesData = []; 
+let likesData = [];
 const data2 = [];
 const orderedLikesData = [];
 
@@ -46,7 +46,7 @@ const mealCount = async () => {
   const response = await getFood();
   const Count = document.getElementById('meal-count');
   const meals = document.getElementsByClassName('meal-item');
-  const data = meals.length/2;
+  const data = meals.length / 2 ;
   Count.innerHTML = ` (${data}) Meals `;
 };
 window.addEventListener('load', mealCount);
@@ -56,9 +56,9 @@ window.addEventListener('load', mealCount);
 
 const getRecipe = async (e) => {
   if (e.target.classList.contains('recipe-btn')) {
-    let mealItem = e.target.parentElement.parentElement;
+    const mealItem = e.target.parentElement.parentElement;
     // console.log(mealItem);
-    let foodID = mealItem.getAttribute('meal-id');
+    const foodID = mealItem.getAttribute('meal-id');
     // console.log(foodID);
 
     const res = await fetch(
@@ -126,7 +126,7 @@ const getRecipe = async (e) => {
         }
       });
       const wait = await addToList();
-      let data = scoreArray.length;
+      const data = scoreArray.length;
       commentsHeader.innerHTML = ` (${data}) Comments `;
     };
     listComment();
@@ -157,7 +157,6 @@ modalDetail.addEventListener('click', (e) => {
 
 // Create the add like functionality
 mealList.addEventListener('click', async (e) => {
-  // console.log(e.target);
   if (e.target.classList.contains('fa-heart')) {
     const mainList =
       e.target.parentElement.parentElement.parentElement.parentElement
@@ -166,8 +165,6 @@ mealList.addEventListener('click', async (e) => {
     postLike(id);
     const updateLikes = mainList.lastElementChild.children[1];
     likesData = await renderLike();
-
-    console.log('likesData', likesData);
 
     likesData.forEach((entry) => {
       if (entry.item_id == id) {
@@ -193,7 +190,6 @@ const postLike = async (mealId) => {
     },
   );
   const res = await response.text();
-  // console.log(res);
 };
 
 const renderLike = async () => {
@@ -201,11 +197,10 @@ const renderLike = async () => {
     'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bbDC3TOidzHVfwfLZkFs/likes',
   );
   const data = await response.json();
-  console.log('Data renderLike', data);
   return data;
 };
 
-//*******************************COMMENTS INVOLVEMENT API*****************************/
+// *******************************COMMENTS INVOLVEMENT API*****************************/
 // Post the comments
 const postComment = async (mealCode, user, insights) => {
   const comment = {
@@ -224,7 +219,6 @@ const postComment = async (mealCode, user, insights) => {
     },
   );
   const res = await response.text();
-  console.log(res);
 };
 
 // Retrieve the comment from the API
@@ -233,10 +227,7 @@ const retrieveComments = async (itemId) => {
   const response = await fetch(url);
   const data = await response.json();
   return data;
-  // console.log(data)
 };
-
-// ////////////////////////////////
 
 const renderLike2 = async () => {
   const response = await fetch(
