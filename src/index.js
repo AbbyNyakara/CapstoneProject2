@@ -1,4 +1,4 @@
-/* eslint disable no-unused-vars*/
+/* eslint-disable no-unused-vars */
 
 import './index.css';
 
@@ -10,21 +10,18 @@ const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=egg';
 const modalDetail = document.querySelector('.meal-details');
 
 // Add event listeners
-let foodData = [], likesData = [], data2 = [];
-let orderedLikesData = [];
+let foodData = [];
+let likesData = []; 
+const data2 = [];
+const orderedLikesData = [];
 
 const getFood = async () => {
   mealList.innerHTML = '';
   const response = await fetch(url);
   const dataContent = await response.json();
   foodData = dataContent.meals;
-  // const foodData = dataContent.meals;
-  console.log('FoodData', foodData);
 
   foodData.forEach((meal) => {
-    //indexNumber = data2.indexOf(meal.idMeal);
-    // console.log('index of number', data2)
-    console.log('Meal ID', meal.idMeal);
     mealList.innerHTML += `
           <div class="meal-item" meal-id = ${meal.idMeal}>
             <div class="meal">
@@ -50,7 +47,6 @@ const mealCount = async () => {
   const Count = document.getElementById('meal-count');
   const meals = document.getElementsByClassName('meal-item');
   const data = meals.length/2;
-  console.log(data);
   Count.innerHTML = ` (${data}) Meals `;
 };
 window.addEventListener('load', mealCount);
