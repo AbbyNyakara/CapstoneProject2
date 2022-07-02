@@ -4,7 +4,7 @@ RECIPE HUB - Javascript capstone project
 
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-# themealdb
+# RECIPE HUB PROJECT
 
 This is the capstone project for module two in Microverse (Kanban board).
 In this project we created a fully functional web app that fetches tv shows from an api [Meal App](https://www.themealdb.com)
