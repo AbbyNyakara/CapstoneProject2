@@ -46,7 +46,7 @@ const mealCount = async () => {
   const response = await getFood();
   const Count = document.getElementById('meal-count');
   const meals = document.getElementsByClassName('meal-item');
-  const data = meals.length / 2 ;
+  const data = meals.length / 2;
   Count.innerHTML = ` (${data}) Meals `;
 };
 window.addEventListener('load', mealCount);
@@ -143,7 +143,7 @@ const getRecipe = async (e) => {
 
 mealList.addEventListener('click', getRecipe);
 
-//Add event listener to the close button
+// Add event listener to the close button
 modalDetail.addEventListener('click', (e) => {
   if (e.target.classList.contains('fa-xmark')) {
     const modal = e.target.parentElement.parentElement;
@@ -158,8 +158,7 @@ modalDetail.addEventListener('click', (e) => {
 // Create the add like functionality
 mealList.addEventListener('click', async (e) => {
   if (e.target.classList.contains('fa-heart')) {
-    const mainList =
-      e.target.parentElement.parentElement.parentElement.parentElement
+    const mainList = e.target.parentElement.parentElement.parentElement.parentElement
         .parentElement;
     const id = mainList.getAttribute('meal-id');
     postLike(id);
@@ -167,7 +166,7 @@ mealList.addEventListener('click', async (e) => {
     likesData = await renderLike();
 
     likesData.forEach((entry) => {
-      if (entry.item_id == id) {
+      if (entry.item_id === id) {
         updateLikes.innerHTML = `${entry.likes} Likes`;
       }
     });
@@ -239,7 +238,7 @@ const renderLike2 = async () => {
   const dataContent = await response2.json();
   foodData = dataContent.meals;
 
-  let data3 = Promise.allSettled([foodData, data2]).then((values) => {
+  const data3 = Promise.allSettled([foodData, data2]).then((values) => {
     values[0].value.forEach((elem0) => {
       values[1].value.forEach((elem1) => {
         if (elem0.idMeal === elem1.item_id) {
