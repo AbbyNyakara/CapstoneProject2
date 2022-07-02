@@ -1,6 +1,6 @@
 # CapstoneProject2
 
-Javascript Capstone Project 2
+RECIPE HUB - Javascript capstone project 
 
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
@@ -10,7 +10,7 @@ This is the capstone project for module two in Microverse (Kanban board).
 In this project we created a fully functional web app that fetches tv shows from an api [Meal App](https://www.themealdb.com)
 Users can also comment and like movies and shows.
 
-### [Live Demo Link]()
+### [Project Demo Link](https://www.loom.com/share/e59aee87611948e5961a0c344acc8d61)
 
 ## Built With
 
@@ -20,6 +20,8 @@ Users can also comment and like movies and shows.
 ## Getting Started
 
 To get a local copy up and running follow these simple example steps.
+
+
 
 ## Prerequisites
 
