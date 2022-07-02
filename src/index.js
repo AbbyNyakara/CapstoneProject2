@@ -50,7 +50,7 @@ const mealCount = async () => {
   const response = await getFood();
   const Count = document.getElementById('meal-count');
   const meals = document.getElementsByClassName('meal-item');
-  const data = meals.length;
+  const data = meals.length/2;
   console.log(data);
   Count.innerHTML = ` (${data}) Meals `;
 };

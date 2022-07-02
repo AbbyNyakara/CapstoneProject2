@@ -312,3 +312,18 @@ small {
 .hide {
   visibility: hidden;
 }
+
+/* Logo Styling */
+.logo {
+  color: #fff;
+  background: var(--dark-orange);
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#user-comments > li {
+  list-style: none;
+  font-size: 12px;
+  padding-bottom: 2px;
+}
