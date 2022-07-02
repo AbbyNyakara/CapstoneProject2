@@ -1,12 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Food Search App</title>
-<script defer src="bundle.js"></script></head>
-<body>
-  <h1>Are you hungry</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Food App</title>
+  <script defer src="bundle.js"></script></head>
+
+  <body>
+    <header>
+      <ul class="head">
+        <li class="logo"><img src="/src/LoGo.svg" alt="logo" /></li>
+        <li id="meal-count">Meals</li>
+      </ul>
+    </header>
+    <div class="container">
+      <div class="meal-wrapper">
+        <div class="meal-search">
+          <h2>Food Doesn't Have to be Boring!</h2>
+          <blockquote>
+            I dont want to look back and think "I could have eaten that"
+          </blockquote>
+          <cite>-Anonymous</cite>
+        </div>
+
+        <!-- Results from the API  -->
+
+        <div class="meal-result">
+          <h2>Try Some Recipes</h2>
+
+          <!-- Meal-cards container  -->
+          <div id="meal"></div>
+        </div>
+
+        <!-- Popup detail- -->
+        <div class="meal-details hide"></div>
+
+        <!-- End of details popup -->
+      </div>
+      <div class="footer">
+        <p>
+          &copy; 2022 Created by
+          <a href="https://github.com/AbbyNyakara" target="_blank">Abby</a>
+          and
+          <a href="https://github.com/ShaheerCH" target="_blank">Shaheer</a>
+        </p>
+      </div>
+    </div>
+  </body>
 </html>
